@@ -34,7 +34,7 @@ jobs:
             npm ci
             npm run build
       - name: Push on Linkit/gh-pages
-        uses: Override6/Linkit@gh-pages
+        uses: Override6/Linkit@main
         env:
           SSH_DEPLOY_KEY: ${{ secrets.GH_PAGES_DEPLOY }}
         with:
