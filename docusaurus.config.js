@@ -10,7 +10,7 @@ const config = {
   tagline: 'Dinosaurs are coollent',
 
   url: 'https://linkit-wiki.com',
-  baseUrl: '/',
+  baseUrl: '/Linkit-Wiki/',
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
 
