@@ -24,7 +24,8 @@ jobs:
     if: github.event_name != 'pull_request'
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout
+        uses: actions/checkout@v2
       - uses: actions/setup-node@v3
         with:
           node-version: 16.x
@@ -35,7 +36,7 @@ jobs:
             npm ci
             npm run build
       - name: Push on Linkit/gh-pages
-        uses: Override-6/Linkit@master
+        uses: Override-6/Linkit@gh-pages
         env:
           API_TOKEN_GITHUB: ${{ secrets.GH_PAGES_DEPLOY }}
         with:
