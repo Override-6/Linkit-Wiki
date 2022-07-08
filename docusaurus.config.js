@@ -8,6 +8,7 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 const config = {
   title: 'Linkit',
   tagline: 'Dinosaurs are coollent',
+
   url: 'https://linkit-wiki.com',
   baseUrl: '/',
   onBrokenLinks: 'throw',
