@@ -23,6 +23,9 @@ jobs:
   deploy:
     if: github.event_name != 'pull_request'
     runs-on: ubuntu-latest
+    environment: 
+      name: linkit_gh-pages
+      url: https://github.com/Override-6/Linkit/tree/gh-pages
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v3
