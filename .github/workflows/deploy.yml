@@ -31,12 +31,10 @@ jobs:
           cache: npm
       - name: compile...
         run: |
-            git config --global user.email "maximebatista18@gmail.com"
-            git config --global user.name "Override6"
             npm ci
             npm run build
       - name: Push on Linkit/gh-pages
-        uses: Override6/Linkit@ssh-deploy-key
+        uses: Override-6/Linkit@gh-pages
         env:
           SSH_DEPLOY_KEY: ${{ secrets.GH_PAGES_DEPLOY }}
         with:
