@@ -29,16 +29,17 @@ jobs:
         with:
           node-version: 16.x
           cache: npm
+      
       - name: compile...
         run: |
             npm ci
             npm run build
       - name: Push on Linkit/gh-pages
-        uses: Override-6/Linkit@gh-pages
+        uses: Override-6/Linkit@master
         env:
-          SSH_DEPLOY_KEY: ${{ secrets.GH_PAGES_DEPLOY }}
+          API_TOKEN_GITHUB: ${{ secrets.GH_PAGES_DEPLOY }}
         with:
-          source-directory: /
+          source-directory: '/'
           destination-github-username: 'Override6'
           destination-repository-name: 'Linkit'
           user-email: 'maximebatista18@gmail.com'
