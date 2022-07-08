@@ -28,12 +28,12 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 16.x
-          cache: yarn
+          cache: npm
       - name: Deploy to GitHub Pages
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          git config --global user.email "actions@github.com"
-          git config --global user.name "gh-actions"
-          yarn install --frozen-lockfile
-          yarn deploy
+          git config --global user.email "maximebatista18@gmail.com"
+          git config --global user.name "Override6"
+          npm ci
+          npm run build
