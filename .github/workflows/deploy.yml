@@ -23,23 +23,26 @@ jobs:
   deploy:
     if: github.event_name != 'pull_request'
     runs-on: ubuntu-latest
-    environment: 
-      name: linkit_gh-pages
-      url: https://github.com/Override-6/Linkit/tree/gh-pages
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v3
         with:
           node-version: 16.x
           cache: npm
-      - uses: webfactory/ssh-agent@v0.5.0
-        with:
-          ssh-private-key: ${{ secrets.GH_PAGES_DEPLOY }}
-      - name: Deploy to GitHub Pages
-        env:
-          USE_SSH: true
+      - name: compile...
         run: |
-          git config --global user.email "maximebatista18@gmail.com"
-          git config --global user.name "Override6"
-          npm ci
-          npm run build
+            git config --global user.email "maximebatista18@gmail.com"
+            git config --global user.name "Override6"
+            npm ci
+            npm run build
+      - name: Push on Linkit/gh-pages
+        uses: Override6/Linkit@ssh-deploy-key
+        env:
+          SSH_DEPLOY_KEY: ${{ secrets.GH_PAGES_DEPLOY }}
+        with:
+          source-directory: /
+          destination-github-username: 'Override6'
+          destination-repository-name: 'Linkit'
+          user-email: 'maximebatista18@gmail.com'
+          commit-message: commit $GITHUB_REF
+          target-branch: gh-pages
