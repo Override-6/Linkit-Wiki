@@ -34,7 +34,6 @@ jobs:
           cache: npm
       - name: clone Override-6/Linkit/gh-pages
         run: |
-          echo $GITHUB_TOKEN
           cd /home/runner/work/
           git clone https://user:@github.com/Override-6/Linkit
           cd /home/runner/work/Linkit
