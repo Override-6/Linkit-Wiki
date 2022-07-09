@@ -34,7 +34,7 @@ jobs:
         run: |
           git clone https://user:$GITHUB_TOKEN@github.com/Override-6/Linkit
           cd Linkit
-          cd
+          pwd
           git config --global user.email "maximebatista18@gmail.com"
           git config --global user.name "Override-6"
           git checkout -b gh-pages
