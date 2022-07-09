@@ -38,13 +38,14 @@ jobs:
           pwd
           git config --global user.email "maximebatista18@gmail.com"
           git config --global user.name "Override-6"
-          git checkout -b gh-pages
+          git checkout gh-pages
           ls
       - name: compile...
         run: |
             npm ci
             npm run build
-            mv /home/runner/work/Linkit-Wiki/Linkit-Wiki/build /home/runner/work/Linkit/
+            cp -R /home/runner/work/Linkit-Wiki/Linkit-Wiki/build/* /home/runner/work/Linkit/
+
       - name: make commit
         run: |
           cd /home/runner/work/Linkit
