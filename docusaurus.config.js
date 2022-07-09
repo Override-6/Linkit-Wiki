@@ -7,10 +7,10 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 /** @type {import('@docusaurus/types').Config} */
 const config = {
   title: 'Linkit',
-  tagline: 'Dinosaurs are coollent',
+  tagline: 'Dinosaurs are cool :DDDDD',
 
   url: 'https://linkit-wiki.com',
-  baseUrl: '/Linkit-Wiki/',
+  baseUrl: '/Linkit/',
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
 
