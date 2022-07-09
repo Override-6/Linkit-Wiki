@@ -36,7 +36,6 @@ jobs:
           cd Linkit
           git config --global user.email "maximebatista18@gmail.com"
           git config --global user.name "Override-6"
-          git config --unset-all http.https://github.com/.extraheader
           git checkout -b gh-pages
       - name: compile...
         run: |
