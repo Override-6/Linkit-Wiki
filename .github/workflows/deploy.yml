@@ -52,4 +52,4 @@ jobs:
           git config --global user.password "$GITHUB_TOKEN"
           git add .
           git commit -m "auto commit"
-          git push https://user:$GITHUB_TOKEN@github.com/Override-6/Linkit gh-pages --force
+          git push origin gh-pages --force
