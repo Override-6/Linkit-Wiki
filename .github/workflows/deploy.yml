@@ -30,20 +30,18 @@ jobs:
         with:
           node-version: 16.x
           cache: npm
-      
+      - name: clone Override-6/Linkit/gh-pages
+        run: |
+          git clone https://user:$GITHUB_TOKEN@github.com/Override-6/Linkit
+          cd Linkit
+          git checkout -b gh-pages
+          
       - name: compile...
         run: |
             npm ci
             npm run build
             ls
-      - name: Push on Linkit/gh-pages
-        uses: Override-6/Linkit@gh-pages
-        env:
-          API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
-        with:
-          source-directory: '/'
-          destination-github-username: 'Override6'
-          destination-repository-name: 'Linkit'
-          user-email: 'maximebatista18@gmail.com'
-          commit-message: commit $GITHUB_REF pls work
-          target-branch: gh-pages
+      - name: make commit
+        run: |
+          git add .
+          git commit -m "$COMMIT"
