@@ -50,5 +50,5 @@ jobs:
         run: |
           cd /home/runner/work/Linkit
           git add .
-          git commit -m "$COMMIT"
+          git commit -m "auto commit"
           git push origin gh-pages --force
