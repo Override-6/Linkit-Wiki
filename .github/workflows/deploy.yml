@@ -23,17 +23,22 @@ jobs:
   deploy:
     if: github.event_name != 'pull_request'
     runs-on: ubuntu-latest
+    env:
+      GITHUB_TOKEN: ${{ secrets.API_TOKEN_GITHUB }}
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+        with: 
+          token: ${{ secrets.PAT }}
       - uses: actions/setup-node@v3
         with:
           node-version: 16.x
           cache: npm
       - name: clone Override-6/Linkit/gh-pages
         run: |
+          echo $GITHUB_TOKEN
           cd /home/runner/work/
-          git clone https://user:$GITHUB_TOKEN@github.com/Override-6/Linkit
+          git clone https://user:@github.com/Override-6/Linkit
           cd /home/runner/work/Linkit
           pwd
           git checkout gh-pages
