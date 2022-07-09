@@ -52,5 +52,5 @@ jobs:
           git config --global user.email "maximebatista18@gmail.com"
           git config --global user.name "Override-6"
           git add .
-          git commit -m "auto commit"
+          git commit --allow-empty -m "auto commit"
           git push https://Override-6:$GITHUB_TOKEN@github.com/Override-6/Linkit gh-pages --force
