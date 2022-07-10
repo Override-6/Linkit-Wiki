@@ -65,7 +65,7 @@ const config = {
                         type: 'doc',
                         docId: 'intro',
                         position: 'left',
-                        label: 'Tutorial',
+                        label: 'Docs',
                     },
                     {
                         href: 'https://github.com/facebook/docusaurus',
@@ -77,15 +77,6 @@ const config = {
             footer: {
                 style: 'dark',
                 links: [
-                    {
-                        title: 'Docs',
-                        items: [
-                            {
-                                label: 'Tutorial',
-                                to: '/docs/intro',
-                            },
-                        ],
-                    },
                     {
                         title: 'Community',
                         items: [
@@ -103,7 +94,7 @@ const config = {
                             },
                         ],
                     },
-                    ],
+                                    ],
                 copyright: `Copyright © ${new Date().getFullYear()} My Project, Inc. Built with Docusaurus.`,
             },
             prism: {
