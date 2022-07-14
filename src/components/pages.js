@@ -1,5 +1,5 @@
 
-const pages = {
+export const pages = {
     getting_started: {
         intro: "/Linkit/docs/Getting Stared/Naming/Introduction",
         framework_architecture: "/Linkit/docs/Getting Stared/Naming/Framework Architecture",
@@ -17,6 +17,9 @@ const pages = {
                 bhv_lang: {}
 
             }
-        }
+        },
+        persistence: undefined
     }
 }
+
+export default pages

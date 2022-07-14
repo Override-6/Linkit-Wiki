@@ -65,10 +65,14 @@ const config = {
                         type: 'doc',
                         docId: 'intro',
                         position: 'left',
-                        label: 'Docs',
+                        label: 'Wiki',
                     },
                     {
-                        href: 'https://github.com/facebook/docusaurus',
+                        label: 'docs',
+                        to: 'pathname:///scaladoc'
+                    },
+                    {
+                        href: 'https://github.com/Override-6/Linkit/',
                         label: 'GitHub',
                         position: 'right',
                     },
