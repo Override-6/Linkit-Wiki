@@ -18,7 +18,9 @@ export const pages = {
 
             }
         },
-        persistence: undefined
+        persistence: {
+            intro: "/Linkit/docs/GNOM/persistence/intro"
+        }
     }
 }
 

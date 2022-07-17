@@ -3,6 +3,105 @@ sidebar_position: 1
 sidebar_label: Network Objects
 ---
 
+import pages from "/src/components/pages.js"
+import {doc} from "/src/components/doc_search.js"
+
 # What is a network object
 
-A <orange> Network Object </orange> is an
+<p>
+    <orange>Network Objects</orange>
+    are an essential part of the <orange>GNOM</orange> System.<br></br>
+    Those are objects that can be represented by their <a href={pages.gnom.naming.nor}>reference</a>.
+</p>
+
+<p>
+    A <orange>network object</orange> is an object that is present on multiple engines.<br></br>
+    They are used mainly by the <orange>persistence system</orange>,
+    thus, <orange>network objects</orange> are replaced by their <orange>reference</orange> object in the Socket stream.<br></br>
+    As a result, it reduces the length of packets, and moreover, adds more possibility and abstraction for
+    engines concerning object transport :
+</p>
+
+## Example of use:
+### Serialize non-serializable objects
+<p>
+    The <orange>current persistence system</orange> is already able to handle objects that are <orange>not
+    designed</orange> to support <orange>serialization</orange>,
+    and is enough <orange>configurable</orange> to let the user define how an object should
+    be <orange>serialised/deserialized</orange>
+    if the default 'field copy/paste' method is not convenient.<br></br>
+    however, there is still enough reason why serialization/deserialization of an object can be undesirable:
+</p>
+<p>
+    For example, the trait <a href={doc("fr.linkit.api.application.ApplicationContext")}>ApplicationContext</a>'s
+    implementations objects are just <orange>too big</orange> to get
+    send threw the <orange>network</orange>. Moreover, <orange>they are intended to have only one instance in the
+    JVM</orange>. Without the GNOM (General Network's Objects Management), if the <orange>Application
+    object</orange> is set into a packet, and then the packet is send to any
+    engine, the the <a href={pages.gnom.persistence.intro}>persistence</a> system will handle the
+    <a href={doc("fr.linkit.api.application.ApplicationContext")}> Application</a> object as such, and so, the receiver
+    of the packet
+    will end up with two applications objects, <orange>which is problematic because only one ApplicationContext is
+    intended</orange>.
+    Thanks to the <orange>GNOM System</orange>, this kind of <orange>conceptual problem</orange> can
+    be <orange>avoided</orange> as only the <orange>application's reference</orange> will
+    be sent in the socket, and then the receiver's GNOM system will replace the received reference by its Application
+    object.
+</p>
+
+### Relative Objects
+<p>
+    Well, as <orange>NetworkObjects</orange> are bound to their <orange>reference</orange>, this means that
+    a <orange>Network Object Reference</orange> (or <orange>NOR</orange>) can point to a <orange>network
+    object </orange> that can be <orange>different</orange> depending on the machine.<br></br>
+</p>
+
+
+
+
+<orange>As an example</orange>, let's assume that we are making a multiplayer game.<br></br>
+
+For this game, we define a trait `Player extends NetworkObject[PlayerReference]` and two implementations of Player:
+- `ControlledPlayer`, relative to each connected <orange>engine</orange>, which is the player object of the <orange>human behind the screen</orange> that can actually
+control the player
+- `RemotePlayer`, for remote players that are connected to our session.
+
+We can define a <orange>reference</orange> (such as `@session/players/controller`) that all `ControlledPlayer` objects of the <orange>network</orange>
+will be bound to (invoking `ControlledPlayer#reference` will return the reference `@session/players/controller`). using this trick,
+once the `ControlledPlayer` object is sent to an engine, as Network Object are replaced by their reference during the serialization, the
+engines that will receive the reference will take the object referenced at `@session/players/controller`, which will result
+to its own `ControlledPlayer` instance.
+
+This way, we can easily create packets that says 'hey, do something with your own controlled player'
+
+Conversely, we could define a <orange>reference</orange> to each player connected on the session.<br></br>
+For engine '<orange>n</orange>', we would have reference `@session/players/n`, and then,
+we bind our `ControlledPlayer` object to the network object reference where '<orange>n</orange>' is equals to our actual <orange>engine's identifier</orange>.<br></br>
+This way, when we receive or send a player object, we are sure that it will be the <orange>correct type</orange> depending on which engine the object lands,
+and the <orange>conversion</orange> from the 'RemotePlayer' object of the <orange>engine<orange> that sends us our </orange>own player instance</orange> (our `ControlledPlayer`) will be <orange>naturally performed</orange>.
+
+### Reinjecting same objects references
+<p>
+    Note: Do not be confused between <a href={pages.gnom.naming.nor}>Network Object Reference</a> and a normal object
+    reference. Object References, or a 'reference'
+    is simply the normal reference of an object,
+    the usual term to point to an instance (variables, fields etc) <a href={pages.gnom.naming.nor}>Network Object
+    References are</a>, as said multiple times, the
+    reference of an object <orange>threw the network</orange>.
+</p>
+<p>
+    Using <orange>normal objects</orange>, if you send twice the <orange>same object</orange> to an engine,
+    the engine will get <orange>two different clones</orange> of the object you sent.
+</p>
+<p>
+    Using a <orange>NetworkObject</orange>, you ensure that the object will have <orange>only one instance</orange> of
+    itself on engines, without having any
+    <orange>undesirable</orange> clones.
+</p>
+<p>
+    Using <a href={doc("fr.linkit.api.gnom.persistence.context.PersistenceConfig")}>PersistenceConfig </a>
+    and <a href={"fr.linkit.api.gnom.reference.linker.ContextObjectLinker"}>ContextObjectLinker</a>]], it is possible to
+    <orange>bind any object</orange> to a <orange>network reference</orange>. <br></br>
+    Binding a regular object to a network reference using ContextObjectLinkers is sufficient for the objects to be handled as a <orange>network object</orange> by the
+    <orange>persistence system</orange>.
+</p>
