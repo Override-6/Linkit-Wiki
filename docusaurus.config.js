@@ -105,6 +105,10 @@ const config = {
                 theme: lightCodeTheme,
                 darkTheme: darkCodeTheme,
             },
+            colorMode: {
+                defaultMode: 'light',
+                respectPrefersColorScheme: true,
+            }
         }),
 };
 
