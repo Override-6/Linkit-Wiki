@@ -72,6 +72,10 @@ const config = {
                         to: 'pathname:///scaladoc'
                     },
                     {
+                        label: 'roadmap',
+                        to: 'roadmap'
+                    },
+                    {
                         href: 'https://github.com/Override-6/Linkit/',
                         label: 'GitHub',
                         position: 'right',
@@ -104,6 +108,7 @@ const config = {
             prism: {
                 theme: lightCodeTheme,
                 darkTheme: darkCodeTheme,
+                additionalLanguages: ['java', 'scala'],
             },
         }),
 };
