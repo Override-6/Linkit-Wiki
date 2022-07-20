@@ -11,7 +11,7 @@ const config = {
 
     url: 'https://linkit-wiki.com',
     baseUrl: '/Linkit/',
-    onBrokenLinks: 'throw',
+    onBrokenLinks: 'warn',
     onBrokenMarkdownLinks: 'warn',
 
     favicon: 'img/favicon.ico',
@@ -110,6 +110,10 @@ const config = {
                 darkTheme: darkCodeTheme,
                 additionalLanguages: ['java', 'scala'],
             },
+            colorMode: {
+                defaultMode: 'light',
+                respectPrefersColorScheme: true,
+            }
         }),
 };
 

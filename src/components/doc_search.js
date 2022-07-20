@@ -1,4 +1,4 @@
 
 export function doc(classname) {
-    return "/scaladoc/" + classname.toString().replace(/\./g, "/")
+    return "pathname:///scaladoc/" + classname.toString().replace(/\./g, "/")
 }
