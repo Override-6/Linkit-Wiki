@@ -50,7 +50,7 @@ jobs:
         run: |
           cd /home/runner/work/Linkit
           git config --global user.email "maximebatista18@gmail.com"
-          git config --global user.name "Override-6"
+          git config --global user.name "Override-6 [bot]"
           git add .
           git commit --allow-empty -m "auto commit"
           git push https://Override-6:$GITHUB_TOKEN@github.com/Override-6/Linkit gh-pages --force
