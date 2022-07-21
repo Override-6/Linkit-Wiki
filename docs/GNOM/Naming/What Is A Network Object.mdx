@@ -3,8 +3,6 @@ sidebar_position: 1
 sidebar_label: Network Objects
 ---
 
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
 import pages from "/src/components/pages.js"
 import {doc} from "/src/components/doc_search.js"
 
@@ -13,15 +11,19 @@ import {doc} from "/src/components/doc_search.js"
 ## What is a network object
 
 <p>
-    <orange>Network Objects</orange>
+    <orange>Network Objects </orange>
     are an essential part of the <orange>GNOM</orange> System.<br></br>
-    Their only particularity is that they are bound with a <a href={pages.gnom.naming.nor}>reference</a>.<br></br>
+    Their particularity is that they are bound with a <a href={pages.gnom.naming.nor}>reference</a>.<br></br>
     This concept is really <orange>simple</orange>, but this allows the framework to perform <orange>packet stream size
     optimisation</orange>,
     by sending the reference instead of the object itself, and, on top of that, sending the reference of an object
     allows to solve <orange>recurrent issues</orange> when developing a network based system,
     and eases the manipulation of <i>network</i> objects between <orange>remote engines</orange>
 </p>
+
+## Network Object Presence
+This concept of object presence is really important to understand Network Objects and the GNOM System.
+
 
 ## How to create a Network Object
 To create a Network Object, you'll need 3 things:
