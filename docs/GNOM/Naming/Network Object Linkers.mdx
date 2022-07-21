@@ -1,5 +1,5 @@
 ---
-sidebar_position: 4
+sidebar_position: 3
 ---
 
 import Diagram_Dark from "/src/components/diagrams/GNOL Architecture.svg"
@@ -11,10 +11,14 @@ import {useColorMode} from '@docusaurus/theme-common'
 <orange>Network Object Linkers</orange> (<orange>or NOLs</orange>), are the central part of the <orange>General Network
     Object Management</orange> (or <orange>GNOM</orange>) system.
 
-A <orange>NOL</orange> is a class that <orange>binds</orange> Network Objects with their <orange>references</orange>, and
-that <orange>ensures</orange> to know if the registered network object's references are present, or not on other engines.<br></br>
+A <orange>NOL</orange> is a class that <orange>registers</orange> Network Objects and who is able to find a registered network object using
+its <orange>reference</orange>.
+NOLs also <orange>ensures</orange> to know if the registered references are registered, or not on other engines.<br></br>
 
-# Network Object Linking Architecture.
+## Principle
+
+
+## Network Object Linking Architecture.
 
 The <orange>Network Object Linkage</orange> operates in a <orange>tree architecture</orange>.<br></br>
 An object linker can contain <orange>children</orange>, and when a request is performed on a linker, its implementation is free to decide to delegate the
@@ -31,6 +35,8 @@ export function Diagram(style) {
 }
 
 <Diagram style={{marginLeft: "auto", marginRight: "auto"}}/>
+
+
 
 
 
