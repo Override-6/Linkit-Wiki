@@ -68,12 +68,16 @@ const config = {
                         label: 'Wiki',
                     },
                     {
-                        label: 'docs',
+                        label: 'Docs',
                         to: 'pathname:///scaladoc'
                     },
                     {
-                        label: 'roadmap',
+                        label: 'Roadmap',
                         to: 'roadmap'
+                    },
+                    {
+                        label: 'Contribute',
+                        to: 'contribute'
                     },
                     {
                         href: 'https://github.com/Override-6/Linkit/',
@@ -102,7 +106,7 @@ const config = {
                             },
                         ],
                     },
-                                    ],
+                ],
                 copyright: `Copyright © ${new Date().getFullYear()} Linkit, Inc.<br>Built with Docusaurus.`,
             },
             prism: {

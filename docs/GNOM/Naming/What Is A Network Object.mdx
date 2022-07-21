@@ -3,6 +3,8 @@ sidebar_position: 1
 sidebar_label: Network Objects
 ---
 
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
 import pages from "/src/components/pages.js"
 import {doc} from "/src/components/doc_search.js"
 
@@ -11,11 +13,12 @@ import {doc} from "/src/components/doc_search.js"
 ## What is a network object
 
 <p>
-    <orange>Network Objects </orange>
+    <orange>Network Objects</orange>
     are an essential part of the <orange>GNOM</orange> System.<br></br>
     Their only particularity is that they are bound with a <a href={pages.gnom.naming.nor}>reference</a>.<br></br>
-    This concept is really <orange>simple</orange>, but this allows the framework to perform <orange>packet stream size optimisation</orange>,
-    by sending the reference instead of the object itself, and, on top of that, sending a reference to an object
+    This concept is really <orange>simple</orange>, but this allows the framework to perform <orange>packet stream size
+    optimisation</orange>,
+    by sending the reference instead of the object itself, and, on top of that, sending the reference of an object
     allows to solve <orange>recurrent issues</orange> when developing a network based system,
     and eases the manipulation of <i>network</i> objects between <orange>remote engines</orange>
 </p>
@@ -24,26 +27,38 @@ import {doc} from "/src/components/doc_search.js"
 To create a Network Object, you'll need 3 things:
 
 1. Define (or use) a `NetworkObjectReference`. Take a look at the <a href={pages.gnom.naming.nor}>Network Object Reference</a> page to learn more.
-   we'll use `MyNetworkObjectReference` for this example.
-2. Define a network object class that extends from the <a href={doc("fr.linkit.api.gnom.reference.NetworkObject")}>NetworkObject</a> interface.
+we'll use `MyNetworkObjectReference` as an example.
+2. Define your network object class by extending the <a href={doc("fr.linkit.api.gnom.reference.NetworkObject")}>NetworkObject</a> interface.
 ```scala
 class MyNetworkObject(override val reference: MyNetworkObjectReference) extends NetworkObject[MyNetworkObjectReference]
 ```
 3. Put the instances of this class in a <a href={doc("fr.linkit.api.gnom.reference.linker.NetworkObjectLinker")}>Network Object Linker </a>.
-   You can define your own Network Object Linker, or use the <a href={doc("fr.linkit.api.gnom.reference.linker.DefaultNetworkObjectLinker")}>DefaultNetworkObjectLinker</a> as
-   a linker for your objects. You can also prefer the <a href={doc("fr.linkit.api.gnom.reference.ContextObjectLinker")}>ContextObjectLinker </a>
-   of your <a href={doc("fr.linkit.api.gnom.packet.channel.PacketChannel")}>PacketChannel</a>.<br></br>
+You can define your own Network Object Linker, or use the <a href={doc("fr.linkit.api.gnom.reference.linker.DefaultNetworkObjectLinker")}>DefaultNetworkObjectLinker</a> as
+a linker for your objects. You can also prefer the <a href={doc("fr.linkit.api.gnom.reference.ContextObjectLinker")}>ContextObjectLinker </a>
+of your <a href={doc("fr.linkit.api.gnom.packet.channel.PacketChannel")}>PacketChannel</a>.<br></br>
+```scala
+val ref = MyNetworkReference("tommy")
+val myNetworkObject = new MyNetworkObject(ref)
+val defaultLinker = network.gnol.defaultNOL
+defaultLinker.save(myNetworkObject)
+```
+Did not understand a thing of the last sentence ? take a look at <a href={pages.gnom.naming.nol}>Network Object Linker page</a>
+to understand what is a network object linker, and know what linker you should use depending on the context and your needs.
 
-   ```scala
-    code
-   ```
+That's it. Now the framework knows your object,
+and if another engine also have an object referenced at `MyNetworkReference("tommy")`,
+no matters the used linker, the referencing will work.
 
-   Did not understand a thing of the last sentence ? take a look at <a href={pages.gnom.naming.nol}>Network Object Linker </a>
-   page to understand what is a network object linker, and know what linker you should use.
+#### So what happens if an engine sends a network object that is not referenced on the targeted engine ?
 
-That's it. Now the framework knows your object, and if another engine have a network object that uses the same reference as `MyNetworkObject`
+The handling of a network object whose reference is not registered on targeted engine is different depending on the type
+of Network Object involved:
+- <u>Regular / Dynamic Network Objects</u><a> </a>
+The object is sent on the distant engine, then the distant engine will register the object's reference.
+- <u>Static Network Objects</u><a> </a>
+Because they are intended to be static over the network, if an engine receives an unregistered static object reference,
+it'll throw an exception.
 
-##
 
 ## Use cases
 ### Serialize non-serializable objects
@@ -126,6 +141,7 @@ and the <orange>conversion</orange> from the 'RemotePlayer' object of the <orang
     Using <a href={doc("fr.linkit.api.gnom.persistence.context.PersistenceConfig")}>PersistenceConfig </a>
     and <a href={"fr.linkit.api.gnom.reference.linker.ContextObjectLinker"}>ContextObjectLinker</a>]], it is possible to
     <orange>bind any object</orange> to a <orange>network reference</orange>. <br></br>
-    Binding a regular object to a network reference using ContextObjectLinkers is sufficient for the objects to be handled as a <orange>network object</orange> by the
+    Binding a regular object to a network reference using ContextObjectLinkers is sufficient for the objects to be
+    handled as a <orange>network object</orange> by the
     <orange>persistence system</orange>.
 </p>
