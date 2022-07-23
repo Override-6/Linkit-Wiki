@@ -8,6 +8,7 @@ import DiagramDark from "/src/components/diagrams/References - Architecture.svg"
 import "/src/css/custom.css"
 import Admonition from '@theme/Admonition';
 import {doc} from "/src/components/doc_search"
+import pages from "/src/components/pages"
 
 # Network Object References
 
@@ -27,7 +28,8 @@ Each objects of the map can be categorized in this way:
 
 We can notice that the references are acting like paths in a File System, we have `game` category, parent of `map` category, parent of sub categories `house`, `player` and `weapon`.
 
-This way, for each category, we have an implementation of the `NetworkObjectReference`<a href={doc("fr.linkit.api.gnom.referencing.NetworkObjectReference")}>*</a> interface :
+This way, for each category, we have an implementation of the `NetworkObjectReference`<a href={doc("fr.linkit.api.gnom.referencing.NetworkObjectReference")}>*</a> interface,
+and <a href={pages.gnom.naming.nol}>Object Linkers</a> that handles the sub linkers, and/or contains the objects
 
 export function Diagram() {
     const {colorMode, _} = useColorMode()
@@ -37,8 +39,21 @@ export function Diagram() {
 
 <Diagram/>
 
-We can see that for each reference type, we have an attributed Object Linker
+<Admonition type="tip" icon="❓" title="isn't it overkill ?">
 
-<Admonition type="tip" icon="❓" title="An Object linker for each parent category and a NOR implementation for each category, isn't it overkill ?">
-    `test`
+The fact that you have to create a linker for each category can seem a bit <orange>annoying</orange>,
+and in this case, if you don't find it useful to create a linker for each <orange>branch</orange> of the naming system,
+don't forget that each `NetworkObjectLinker` implementation can do what it wants, and therefore,
+you can use a `MapNetworkObjectLinker`<a href={doc("fr.linkit.engine.gnom.referencing.linker.MapNetworkObjectLinker")}>*</a><a> </a>
+that will behave like a map object.
+
+Moreover, if you feel <orange>very lazy</orange>,
+you can create <orange>one reference type</orange> for all network objects in your application,
+and roughly map them in a
+`MapNetworkObjectLinker`<a href={doc("fr.linkit.engine.gnom.referencing.linker.MapNetworkObjectLinker")}>*</a>,
+but it is not recommended.
+</Admonition>
+
+<Admonition type="tip" icon="❓" title="So what are the benefit of creating a linker for each category">
+In fact, creating a linker is useful for
 </Admonition>
