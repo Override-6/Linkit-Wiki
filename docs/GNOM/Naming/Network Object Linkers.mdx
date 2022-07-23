@@ -13,18 +13,15 @@ import {useColorMode} from '@docusaurus/theme-common'
 
 A <orange>NOL</orange> is a class that <orange>registers</orange> Network Objects and who is able to find a registered network object using
 its <orange>reference</orange>.
-NOLs also <orange>ensures</orange> to know if the registered references are registered, or not on other engines.<br></br>
+NOLs also <orange>ensures</orange> to know if its registered references are also known, or not on other engines.<br></br>
 
-## Principle
-
-
-## Network Object Linking Architecture.
+## Architecture
 
 The <orange>Network Object Linkage</orange> operates in a <orange>tree architecture</orange>.<br></br>
 An object linker can contain <orange>children</orange>, and when a request is performed on a linker, its implementation is free to decide to delegate the
 request to its children.<br></br>
-The <orange>root linker</orange> of the "<orange>linker tree</orange>" is the <orange> General Network Object Linker</orange> (<orange>or GNOL</orange>).
-This special linker contains sub linkers that can be defined by the user.
+The <orange>root linker</orange> of the <orange>linker tree</orange> is the <orange> General Network Object Linker</orange> (<orange>or GNOL</orange>).
+This special linker contains sub root linkers that can be defined by the user.
 
 Here is an architecture diagram <u>example</u> of the GNOL tree.
 
@@ -35,7 +32,6 @@ export function Diagram(style) {
 }
 
 <Diagram style={{marginLeft: "auto", marginRight: "auto"}}/>
-
 
 
 

@@ -2,5 +2,43 @@
 sidebar_position: 2
 ---
 
+import {useColorMode} from "@docusaurus/theme-common";
+import DiagramLight from "/src/components/diagrams/References - Architecture-Light.svg"
+import DiagramDark from "/src/components/diagrams/References - Architecture.svg"
+import "/src/css/custom.css"
+import Admonition from '@theme/Admonition';
+import {doc} from "/src/components/doc_search"
+
 # Network Object References
 
+Network Object References are <a href="https://docs.scala-lang.org/tour/case-classes.html">case classes</a>, that contains
+any kind of data defined by the user, that defines the information needed for the naming system to retrieve its bounded network object.
+
+## Network Object Reference implementations and architecture.
+
+A Network Object Reference object is an object that contains the needed information to locate a network object in the <a href="Network Object Linkers">GNOL Tree</a>
+
+Let's say we create a game, in which we have a map, with house objects, player objects and weapon objects.
+Each objects of the map can be categorized in this way:
+
+- `@game/map/house/x` for all houses in the map
+- `@game/map/player/x` for players connected on the map
+- `@game/map/weapon/x` for weapons in the map
+
+We can notice that the references are acting like paths in a File System, we have `game` category, parent of `map` category, parent of sub categories `house`, `player` and `weapon`.
+
+This way, for each category, we have an implementation of the `NetworkObjectReference`<a href={doc("fr.linkit.api.gnom.referencing.NetworkObjectReference")}>*</a> interface :
+
+export function Diagram() {
+    const {colorMode, _} = useColorMode()
+    if (colorMode === 'dark') return <DiagramLight/>
+    else return <DiagramDark/>
+}
+
+<Diagram/>
+
+We can see that for each reference type, we have an attributed Object Linker
+
+<Admonition type="tip" icon="❓" title="An Object linker for each parent category and a NOR implementation for each category, isn't it overkill ?">
+    `test`
+</Admonition>
