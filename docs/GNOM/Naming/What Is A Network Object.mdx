@@ -21,9 +21,45 @@ import {doc} from "/src/components/doc_search.js"
     and eases the manipulation of <i>network</i> objects between <orange>remote engines</orange>
 </p>
 
-## Network Object Presence
-This concept of object presence is really important to understand Network Objects and the GNOM System.
+## Regular, Static and Dynamic Network Objects
 
+The concept of Static, Dynamic, and _Regular_ Network Objects only differs by their presence handling over the network.<br></br>
+Here is how you can retrieve the presence for each kind of network objects.
+
+### Regular Network Objects
+
+The <a href={doc("fr.linkit.api.gnom.referencing.NetworkObject")}>`NetworkObject`</a> trait is the base class for declaring a network object.<br></br>
+The only thing exposed in this class is the reference of the object.<br></br>
+
+To retrieve the presence of a regular network object reference, you can use its linker, or a parent of the targeted linker (such as the GNOL).
+```scala
+val linker: NetworkObjectLinker[R] = network.gnol
+val no: NetworkObject = ???
+val presence: Option[NetworkObjectPresence] = linker.findPresence(no.reference)
+```
+
+:::note
+If the network object is registered in the <a href={pages.gnom.naming.nol}>GNOL tree</a>, `linker.findPresence` will return `Some(NetworkObjectPresence)`
+But if the network object isn't registered, or if you try to find the presence of a reference that isn't bound to any network object,
+the return value isn't likely to return `None`, it could return `Some(NetworkObjectPresence)` with the presence state for current engine set to `NOT_PRESENT`
+:::
+
+
+### Dynamic Network Objects
+A Dynamic Network Object presence is handled like a regular Network Object,
+the only thing is that their presence is exposed in the <a href={doc("fr.linkit.api.gnom.referencing.DynamicNetworkObject")}>`DynamicNetworkObject`</a> trait.
+
+```scala
+val dno: DynamicNetworkObject = ???
+val presence: NetworkObjectPresence = dno.presence
+```
+
+### Static Network Objects
+Static Network Objects are specifically handled by the persistence system.<br></br>
+When the serialization process meets a `StaticNetworkObject`, it'll suppose that the object is present on any engine, as
+it is _statically_ present on the network.
+
+Thus, retrieving a
 
 ## How to create a Network Object
 To create a Network Object, you'll need 3 things:
