@@ -7,19 +7,6 @@ on:
     branches: [master]
 
 jobs:
-  test-deploy:
-    if: github.event_name != 'push'
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 16.x
-          cache: npm
-      - name: Install dependencies
-        run: npm ci
-      - name: Test build website
-        run: npm run build
   deploy:
     if: github.event_name != 'pull_request'
     runs-on: ubuntu-latest
