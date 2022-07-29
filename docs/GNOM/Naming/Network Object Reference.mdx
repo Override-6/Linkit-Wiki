@@ -6,7 +6,6 @@ import {useColorMode} from "@docusaurus/theme-common";
 import DiagramLight from "/src/components/diagrams/References - Architecture-Light.svg"
 import DiagramDark from "/src/components/diagrams/References - Architecture.svg"
 import "/src/css/custom.css"
-import Admonition from '@theme/Admonition';
 import {doc} from "/src/components/doc_search"
 import pages from "/src/components/pages"
 
@@ -39,21 +38,4 @@ export function Diagram() {
 
 <Diagram/>
 
-<Admonition type="tip" icon="❓" title="isn't it overkill ?">
 
-The fact that you have to create a linker for each category can seem a bit <orange>too much</orange>,
-and in this case, if you don't find it useful to create a linker for each <orange>branch</orange> of the naming system,
-don't forget that each `NetworkObjectLinker` implementation can do what it wants, and therefore,
-you can use a `MapNetworkObjectLinker`<a href={doc("fr.linkit.engine.gnom.referencing.linker.MapNetworkObjectLinker")}>*</a><a> </a>
-that will behave like a map object.
-
-Moreover, if you feel <orange>very lazy</orange>,
-you can create <orange>one reference type</orange> for all network objects in your application,
-and roughly map them in a
-`MapNetworkObjectLinker`<a href={doc("fr.linkit.engine.gnom.referencing.linker.MapNetworkObjectLinker")}>*</a>,
-but it is not recommended.
-</Admonition>
-
-<Admonition type="tip" icon="❓" title="So what are the benefit of creating a linker for each category">
-In fact, creating a linker is useful for
-</Admonition>

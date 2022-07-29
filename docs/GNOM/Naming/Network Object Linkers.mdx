@@ -2,14 +2,20 @@
 sidebar_position: 3
 ---
 
-import Diagram_Dark from "/src/components/diagrams/GNOL Architecture.svg"
-import Diagram_Light from "/src/components/diagrams/GNOL Architecture-Light.svg"
+import GNOL_Dark from "/src/components/diagrams/GNOL Architecture.svg"
+import GNOL_Light from "/src/components/diagrams/GNOL Architecture-Light.svg"
+import NOL_Dark from "/src/components/diagrams/NOL Architecture.svg"
+import NOL_Light from "/src/components/diagrams/NOL Architecture-Light.svg"
+
 import {useColorMode} from '@docusaurus/theme-common'
+import Admonition from '@theme/Admonition';
+import {doc} from "/src/components/doc_search"
+import pages from "/src/components/pages"
 
 # Network Object Linking
 
 <orange>Network Object Linkers</orange> (<orange>or NOLs</orange>), are the central part of the <orange>General Network
-Object Management</orange> (or <orange>GNOM</orange>) system.
+    Object Management</orange> (or <orange>GNOM</orange>) system.
 
 A <orange>NOL</orange> is a class that <orange>registers</orange> Network Objects and who is able to find a registered network object using
 its <orange>reference</orange>.
@@ -23,12 +29,41 @@ request to its children.<br></br>
 The <orange>root linker</orange> of the <orange>linker tree</orange> is the <orange> General Network Object Linker</orange> (<orange>or GNOL</orange>).
 This special linker contains sub root linkers that can be defined by the user.
 
+Users can use any linkers in the tree, but the <a href={pages.gnom.persistence.index}>Persistence System</a> directly uses the GNOL.
+This way, when the persistence system makes a request to the
+
 Here is an architecture diagram <u>example</u> of the GNOL tree.
 
-export function Diagram(style) {
+export function GNOL(style) {
     const {colorMode, _} = useColorMode()
-    if (colorMode === 'dark') return <Diagram_Light style={style}/>
-    else return <Diagram_Dark style={style}/>
+    if (colorMode === 'dark') return <GNOL_Light style={style}/>
+    else return <GNOL_Dark style={style}/>
 }
 
-<Diagram style={{marginLeft: "auto", marginRight: "auto"}}/>
+<GNOL style={{marginLeft: "auto", marginRight: "auto"}}/>
+
+## Deep look at Network Object Linkers
+
+### 1. Their roles in the persistence system.
+Serialization is a very important issue, and when you design an application and wants it to communicate
+between the server and / or other connected clients, the way that you'll choose how to send data to peers is a considerable question.
+The Framework's <a href={pages.gnom.persistence.index}>Persistence System</a> is autonomous enough to support almost any object serialization / deserialization,
+but it still needs some rules for objects that must receive special handling. Network Objects are those object that gets special handlings, and
+the most of the time, you just want you network objects to get reused by the deserialization process, that's why
+
+
+### 2. Implementation
+In this part, we'll take a look at how to implement a Network Object Linker.
+
+export function NOL(style) {
+    const {colorMode, _} = useColorMode()
+    if (colorMode === 'dark') return <NOL_Light style={style}/>
+    else return <NOL_Dark style={style}/>
+}
+
+Here is the Network Object Linker UML diagram:
+
+<NOL/>
+
+As you can see
+

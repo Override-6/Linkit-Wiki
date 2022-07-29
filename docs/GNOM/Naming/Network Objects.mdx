@@ -11,7 +11,7 @@ import {doc} from "/src/components/doc_search.js"
 ## What is a network object
 
 <p>
-    <orange>Network Objects </orange>
+    <orange>Network Objects</orange>
     are an essential part of the <orange>GNOM</orange> System.<br></br>
     Their particularity is that they are bound with a <a href={pages.gnom.naming.nor}>reference</a>.<br></br>
     This concept is really <orange>simple</orange>, but this allows the framework to perform <orange>packet stream size
@@ -21,10 +21,9 @@ import {doc} from "/src/components/doc_search.js"
     and eases the manipulation of <i>network</i> objects between <orange>remote engines</orange>
 </p>
 
-## Regular, Static and Dynamic Network Objects
-
-The concept of Static, Dynamic, and _Regular_ Network Objects only differs by their presence handling over the network.<br></br>
-Here is how you can retrieve the presence for each kind of network objects.
+## Different kinds of Network Objects
+A Network Object can also be a <orange>Static</orange> or <orange>Dynamic</orange> Network Object. <br></br>
+The concept of Static, Dynamic, and _Regular_ Network Objects only differs by their <a href={pages.gnom.naming.nop}>presence</a> handling over the network.<br></br>
 
 ### Regular Network Objects
 
@@ -35,15 +34,8 @@ To retrieve the presence of a regular network object reference, you can use its 
 ```scala
 val linker: NetworkObjectLinker[R] = network.gnol
 val no: NetworkObject = ???
-val presence: Option[NetworkObjectPresence] = linker.findPresence(no.reference)
+val presence: NetworkObjectPresence = linker.getPresence(no.reference)
 ```
-
-:::note
-If the network object is registered in the <a href={pages.gnom.naming.nol}>GNOL tree</a>, `linker.findPresence` will return `Some(NetworkObjectPresence)`
-But if the network object isn't registered, or if you try to find the presence of a reference that isn't bound to any network object,
-the return value isn't likely to return `None`, it could return `Some(NetworkObjectPresence)` with the presence state for current engine set to `NOT_PRESENT`
-:::
-
 
 ### Dynamic Network Objects
 A Dynamic Network Object presence is handled like a regular Network Object,
@@ -55,11 +47,13 @@ val presence: NetworkObjectPresence = dno.presence
 ```
 
 ### Static Network Objects
-Static Network Objects are specifically handled by the persistence system.<br></br>
+Static Network Objects are supposed to be present on any connected engine.
+This particularity makes the persistence system handle them specially.<br></br>
 When the serialization process meets a `StaticNetworkObject`, it'll suppose that the object is present on any engine, as
 it is _statically_ present on the network.
 
-Thus, retrieving a
+Thus, the serializer will presume that the object is already present on the targeted engine, and will send the object's reference
+without performing any presence checks.
 
 ## How to create a Network Object
 To create a Network Object, you'll need 3 things:
@@ -105,7 +99,7 @@ it'll throw an exception.
     The <orange>current persistence system</orange> is already able to handle objects that are <orange>not
     designed</orange> to support <orange>serialization</orange>,
     and is enough <orange>configurable</orange> to let the user define how an object should
-    be <orange>serialised/deserialized</orange>
+    be <orange>serialised/deserialized </orange>
     if the default 'field copy/paste' method is not convenient.<br></br>
     however, there is still enough reason why serialization/deserialization of an object can be undesirable:
 </p>
@@ -115,7 +109,7 @@ it'll throw an exception.
     send threw the <orange>network</orange>. Moreover, <orange>they are intended to have only one instance in the
     JVM</orange>. Without the GNOM (General Network's Objects Management), if the <orange>Application
     object</orange> is set into a packet, and then the packet is send to any
-    engine, the the <a href={pages.gnom.persistence.intro}>persistence</a> system will handle the
+    engine, the the <a href={pages.gnom.persistence.index}>persistence</a> system will handle the
     <a href={doc("fr.linkit.api.application.ApplicationContext")}> Application</a> object as such, and so, the receiver
     of the packet
     will end up with two applications objects, <orange>which is problematic because only one ApplicationContext is

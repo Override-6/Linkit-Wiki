@@ -7,10 +7,11 @@ export const pages = {
     },
     gnom: {
         naming: {
-            intro: "/Linkit/docs/GNOM/Naming/Introduction",
+            index: "/Linkit/docs/GNOM/Naming",
             nol: "/Linkit/docs/GNOM/Naming/Network Object Linkers",
             nor: "/Linkit/docs/GNOM/Naming/Network Object Reference",
-            no: "/Linkit/docs/GNOM/Naming/What is a network object",
+            nop: "/Linkit/docs/GNOM/Naming/Network Object Presence",
+            no: "/Linkit/docs/GNOM/Naming/Network Objects",
         },
         caches: {
             connected_objects: {
@@ -19,7 +20,7 @@ export const pages = {
             }
         },
         persistence: {
-            intro: "/Linkit/docs/GNOM/persistence/intro"
+            index: "/Linkit/docs/GNOM/persistence"
         }
     }
 }
