@@ -24,13 +24,12 @@ NOLs also <orange>ensures</orange> to know if its registered references are also
 ## Architecture
 
 The <orange>Network Object Linkage</orange> operates in a <orange>tree architecture</orange>.<br></br>
-An object linker can contain <orange>children</orange>, and when a request is performed on a linker, its implementation is free to decide to delegate the
+An object linker can contain <orange>lower-level linkers</orange>, and when a request is performed on a linker, its implementation is free to decide to delegate the
 request to its children.<br></br>
 The <orange>root linker</orange> of the <orange>linker tree</orange> is the <orange> General Network Object Linker</orange> (<orange>or GNOL</orange>).
 This special linker contains sub root linkers that can be defined by the user.
 
-Users can use any linkers in the tree, but the <a href={pages.gnom.persistence.index}>Persistence System</a> directly uses the GNOL.
-This way, when the persistence system makes a request to the
+Users can use any linkers in the tree, but the <a href={pages.gnom.persistence.index}>Persistence System</a> directly starts from the GNOL to retrieve the objects.
 
 Here is an architecture diagram <u>example</u> of the GNOL tree.
 
@@ -42,9 +41,8 @@ export function GNOL(style) {
 
 <GNOL style={{marginLeft: "auto", marginRight: "auto"}}/>
 
-## Deep look at Network Object Linkers
 
-### 1. Their roles in the persistence system.
+## 1. Their roles in the persistence system.
 
 <p>
     <orange>Serialization</orange> is a very important issue,
@@ -69,7 +67,7 @@ export function GNOL(style) {
     GNOL.
 </p>
 
-### 2. Implementation
+## Implementation
 In this part, we'll take a look at how to implement a Network Object Linker.
 
 export function NOL(style) {
@@ -82,5 +80,34 @@ Here is the Network Object Linker UML diagram:
 
 <NOL/>
 
-As you can see
+As you can see, an Object Linker is also a presence handler for its registered references.
+If you ever tried to implement the `NetworkObjectLinker` you must have been surprised to see that you had to implement
+`getPresence(R)` and `isPresentOnEngine(String, R)`. Which must have confused you because you don't know how to handle your references presences.
 
+### AbstractNetworkPresenceHandler
+
+Any implementation of the `NetworkObjectLinker` trait should also extend the `AbstractNetworkPresenceHandler`<a href={doc("fr.linkit.engine.gnom.referencing.presence.AbstractNetworkPresenceHandler")}>*</a> abstract class
+that will implement all the presence handling and let you implement the `findObject(R)` method.
+
+```scala
+class DatabaseLinker(omc: ObjectManagementChannel, db: Connection) extends AbstractNetworkPresenceHandler[DatabaseObjectReference](omc, null) with NetworkObjectLinker[DatabaseObjectReference] {
+    override def findObject(ref: DatabaseObjectReference): Option[NetworkObject[_ <: DatabaseObjectReference] = {
+        //use the database connection to retrieve the object
+    }
+}
+```
+
+By extending this class you'll find out that its constructor needs an `ObjectManagementChannel` and a _nullable_ parent linker.<br></br>
+If your linker is a root linker, parent must be null. the `ObjectManagementChannel` is initially accessible only when
+supplying a root linker to the GNOL.
+
+
+### Register the linker in the GNOL
+
+```scala
+val linker: DatabaseLinker = gnol.addRootLinker(omc => new DatabaseLinker(omc))
+linker.findObject(DatabaseObjectReference(...)) match {
+    case Some(X) => ...
+    case None => ...
+}
+```
