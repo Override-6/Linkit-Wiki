@@ -45,12 +45,29 @@ export function GNOL(style) {
 ## Deep look at Network Object Linkers
 
 ### 1. Their roles in the persistence system.
-Serialization is a very important issue, and when you design an application and wants it to communicate
-between the server and / or other connected clients, the way that you'll choose how to send data to peers is a considerable question.
-The Framework's <a href={pages.gnom.persistence.index}>Persistence System</a> is autonomous enough to support almost any object serialization / deserialization,
-but it still needs some rules for objects that must receive special handling. Network Objects are those object that gets special handlings, and
-the most of the time, you just want you network objects to get reused by the deserialization process, that's why
 
+<p>
+    <orange>Serialization</orange> is a very important issue,
+    and when you design an application and wants it to <orange>communicate </orange>
+    between the server and / or other connected clients, the way that you'll choose how to send data is a considerable
+    question.<br></br>
+    The Framework's <a href={pages.gnom.persistence.index}>Persistence System</a> is autonomous enough to
+    support <orange>almost any</orange> object serialization / deserialization,
+    but it still needs some rules for objects that must receive special handling. <br></br>
+    <orange>Network Objects </orange>
+    are those objects that receive special handling, and
+    the most of the time, you just want you network objects to get reused in the deserialization process, that's why you
+    usually reuse a linker, such as
+    the <a href={doc("fr.linkit.engine.gnom.referencing.linker.MapNetworkObjectLinker")}>MapNetworkObjectLinker</a> as
+    you just want somewhere to put your objects.
+</p>
+<p>
+    In fact, the real first interest in a <orange>custom linker</orange> is when you want to perform <orange>initialization procedures</orange> when a
+    Network Object
+    handleable by your linker gets <orange>deserialized</orange>.<br></br>
+    Second interest is when you have a certain data structure (let's say a database) and wants it to be used in the
+    GNOL.
+</p>
 
 ### 2. Implementation
 In this part, we'll take a look at how to implement a Network Object Linker.
