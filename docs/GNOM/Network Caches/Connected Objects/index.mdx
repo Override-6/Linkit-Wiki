@@ -15,9 +15,13 @@ Make sure you understood the <a href={pages.gnom.naming.index}>Network Objects c
 
 ## Simple Remote Method Invocations (RMIs)
 
-<Diagram dark={require("/src/components/diagrams/Connected Object/Features/Simple RMI.svg")}
-         light={require("/src/components/diagrams/Connected Object/Features/Simple RMI.svg")}
-         style={{width: "75%", height: "75%"}}/>
+```scala
+class MyObject {
+    def foo(): Unit = {
+        print("foo called !")
+    }
+}
+```
 
 <details>
     <summary>Broadcast any method invocation on remote engines</summary>
@@ -26,3 +30,57 @@ Make sure you understood the <a href={pages.gnom.naming.index}>Network Objects c
         from other engines and which internal state is completely synchronized.
     </div>
 </details>
+
+## Flow control (agreements).
+Control who receives an invocation when a method get called, and who in the accepted executors whe choose for returning a result.
+
+```scala
+class MyObject {
+    /**
+     * This method prints a param and return the current JVM version of the engine.
+     * */
+    def doSomething(param: String): String = {
+        print(s"invocation called ! ($param)")
+        System.getProperty("java.version")
+    }
+}
+```
+
+<Diagram light={require("/src/components/diagrams/Connected Object/Features/RMI Agreements.svg")}
+         dark={require("/src/components/diagrams/Connected Object/Features/RMI Agreements.svg")}/>
+
+<details>
+    <summary>Invocation Agreements</summary>
+    <div>
+        You can define a contract for methods and specify agreements that controls the invocation flow over the network.<br></br>
+        As the example shows, it's also possible to <orange>appoint</orange> an engine to wait for a return value, when performing a call on multiple engines<br></br>
+    </div>
+</details>
+
+### Also supports simple conditions
+
+
+## Know who is the invocation origin
+```scala
+class MyObject {
+    /**
+     * This method prints who originally invocated the method.
+     * */
+    def doSomething(): Unit = {
+        val trigerrer = ExecutorEngine.currentEngine
+        print(s"invocation called ! this RMI has been triggered from " + trigerrer.identifier)
+    }
+}
+```
+
+## Apply modifiers on parameters and return values
+
+## Inner object connection
+
+### Also Connect field values of connected objects
+
+### Also Connect param and return values on method invocations
+
+## Remote Implementation
+
+##
