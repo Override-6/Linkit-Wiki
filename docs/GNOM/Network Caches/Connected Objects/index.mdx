@@ -1,5 +1,3 @@
-
-
 import pages from "/src/components/pages"
 import {Diagram} from "/src/components/diagrams/Diagram";
 
@@ -17,11 +15,14 @@ Make sure you understood the <a href={pages.gnom.naming.index}>Network Objects c
 
 ## Simple Remote Method Invocations (RMIs)
 
-<Diagram dark={"/src/components/diagrams/GNOL Architecture.svg"} light={"/src/components/diagrams/GNOL Architecture-Light.svg"}/>
+<Diagram dark={require("/src/components/diagrams/Connected Object/Features/Simple RMI.svg")}
+         light={require("/src/components/diagrams/Connected Object/Features/Simple RMI.svg")}
+         style={{width: "75%", height: "75%"}}/>
 
 <details>
-    <summary>broadcast any method invocation onto remote engines</summary>
+    <summary>Broadcast any method invocation on remote engines</summary>
     <div>
-        test `test`
+        All method invocations can be spread out on other engines in order to simulate a "cloud" object being accessed
+        from other engines and which internal state is completely synchronized.
     </div>
 </details>
