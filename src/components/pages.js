@@ -14,9 +14,12 @@ export const pages = {
             no: "/Linkit/docs/GNOM/Naming/Network Objects",
         },
         caches: {
+            index: "/Linker/docs/GNOM/Network Caches",
+            shared_caches: "/Linker/docs/GNOM/Network Caches/Shared Caches",
             connected_objects: {
-                bhv_lang: {}
-
+                bhv_lang: {},
+                index: "/Linkit/docs/GNOM/Network Caches/Connected Objects",
+                cache: "/Linkit/docs/GNOM/Network Caches/Connected Objects/The ConnectedObjectCache"
             }
         },
         persistence: {

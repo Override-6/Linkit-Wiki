@@ -2,10 +2,10 @@
 sidebar_position: 3
 ---
 
-import GNOL_Dark from "/src/components/diagrams/GNOL Architecture.svg"
-import GNOL_Light from "/src/components/diagrams/GNOL Architecture-Light.svg"
-import NOL_Dark from "/src/components/diagrams/NOL Architecture.svg"
-import NOL_Light from "/src/components/diagrams/NOL Architecture-Light.svg"
+import GNOLDark from "/src/components/diagrams/GNOL Architecture.svg"
+import GNOLLight from "/src/components/diagrams/GNOL Architecture-Light.svg"
+import NOLDark from "/src/components/diagrams/NOL Architecture.svg"
+import NOLLight from "/src/components/diagrams/NOL Architecture-Light.svg"
 
 import {useColorMode} from '@docusaurus/theme-common'
 import Admonition from '@theme/Admonition';
@@ -35,14 +35,14 @@ Here is an architecture diagram <u>example</u> of the GNOL tree.
 
 export function GNOL(style) {
     const {colorMode, _} = useColorMode()
-    if (colorMode === 'dark') return <GNOL_Light style={style}/>
-    else return <GNOL_Dark style={style}/>
+    if (colorMode === 'dark') return <GNOLLight style={style}/>
+    else return <GNOLDark style={style}/>
 }
 
 <GNOL style={{marginLeft: "auto", marginRight: "auto"}}/>
 
 
-## 1. Their roles in the persistence system.
+## Their roles in the persistence system.
 
 <p>
     <orange>Serialization</orange> is a very important issue,
@@ -72,8 +72,8 @@ In this part, we'll take a look at how to implement a Network Object Linker.
 
 export function NOL(style) {
     const {colorMode, _} = useColorMode()
-    if (colorMode === 'dark') return <NOL_Light style={style}/>
-    else return <NOL_Dark style={style}/>
+    if (colorMode === 'dark') return <NOLLight style={style}/>
+    else return <NOLDark style={style}/>
 }
 
 Here is the Network Object Linker UML diagram:
