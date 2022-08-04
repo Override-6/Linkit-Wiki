@@ -23,6 +23,10 @@ class MyObject {
 }
 ```
 
+<Diagram light={require("/src/components/diagrams/Connected Object/Features/Simple RMI.svg")}
+         dark={require("/src/components/diagrams/Connected Object/Features/Simple RMI.svg")}
+         style={{width: "75%", height: "75%", display:"block", margin:"auto"}}/>
+
 <details>
     <summary>Broadcast any method invocation on remote engines</summary>
     <div>
@@ -32,12 +36,12 @@ class MyObject {
 </details>
 
 ## Flow control (agreements).
-Control who receives an invocation when a method get called, and who in the accepted executors whe choose for returning a result.
+Control who receives an invocation when a method get called, and who we choose to return a result.
 
 ```scala
 class MyObject {
     /**
-     * This method prints a param and return the current JVM version of the engine.
+     * This method prints a param and return the current JVM version.
      * */
     def doSomething(param: String): String = {
         print(s"invocation called ! ($param)")
@@ -47,31 +51,59 @@ class MyObject {
 ```
 
 <Diagram light={require("/src/components/diagrams/Connected Object/Features/RMI Agreements.svg")}
-         dark={require("/src/components/diagrams/Connected Object/Features/RMI Agreements.svg")}/>
+         dark={require("/src/components/diagrams/Connected Object/Features/RMI Agreements.svg")}
+         style={{width: "100%", height: "100%", display:"block", margin:"auto"}}/>
 
 <details>
     <summary>Invocation Agreements</summary>
     <div>
         You can define a contract for methods and specify agreements that controls the invocation flow over the network.<br></br>
-        As the example shows, it's also possible to <orange>appoint</orange> an engine to wait for a return value, when performing a call on multiple engines<br></br>
+        As the example shows, it's also possible to <orange>appoint</orange> an engine that'll have to return a result
+        when performing a call on multiple engines<br></br>
     </div>
 </details>
 
 ### Also supports simple conditions
 
+<Diagram light={require("/src/components/diagrams/Connected Object/Features/RMI Agreements - Conditions.drawio.svg")}
+         dark={require("/src/components/diagrams/Connected Object/Features/RMI Agreements - Conditions.drawio.svg")}
+         style={{width: "100%", height: "100%", display:"block", margin:"auto"}}/>
+
+
+You can define some constraints on your agreements depending on the initial method execution context:
+
+<Diagram light={require("/src/components/diagrams/Connected Object/Features/RMI Agreements - Conditions (Contract).drawio.svg")}
+         dark={require("/src/components/diagrams/Connected Object/Features/RMI Agreements - Conditions (Contract).drawio.svg")}
+         style={{width: "50%", height: "50%", display:"block", margin:"auto"}}/>
+
+:::note
+On the diagram, the object is red for the engine that initially owns the object.<br></br>
+Connected Object owners are the engines that initially posted their objects over the network.
+:::
 
 ## Know who is the invocation origin
 ```scala
+
+Using the static method `ExecutorEngine.currentEngine`, you can know who is the origin of the execution of a method.
+This is actually very powerfull for making APIs and client-server actions as you can choose to perform different actions depending on the client
+that is performing a _request_
+
 class MyObject {
     /**
      * This method prints who originally invocated the method.
      * */
-    def doSomething(): Unit = {
+    def printInvoker(): Unit = {
         val trigerrer = ExecutorEngine.currentEngine
         print(s"invocation called ! this RMI has been triggered from " + trigerrer.identifier)
     }
 }
 ```
+
+<Diagram light={require("/src/components/diagrams/Connected Object/Features/ExecutorEngine.svg")}
+         dark={require("/src/components/diagrams/Connected Object/Features/ExecutorEngine.svg")}
+         style={{width: "75%", height: "75%", display:"block", margin:"auto"}}/>
+
+## Static accesses
 
 ## Apply modifiers on parameters and return values
 
@@ -83,4 +115,3 @@ class MyObject {
 
 ## Remote Implementation
 
-##
