@@ -8,8 +8,8 @@ Connected Objects are a powerful evolution of Network Objects.<br></br>
 They comes with an enhanced and configurable RMI system.
 
 Here are the listed features of the connected objects system.
-The <a href={pages.gnom.caches.connected_objects.cache}>next page</a> to know how to start using your connected objects
-Make sure you understood the <a href={pages.gnom.naming.index}>Network Objects concept</a> to do not get lost
+See the <a href={pages.gnom.caches.connected_objects.cache}>next page</a> to know how to start with connected objects.
+Make sure you understood the <a href={pages.gnom.naming.index}>Network Objects concept</a> in order not to get lost while reading this part.
 
 # Features
 
@@ -82,12 +82,12 @@ Connected Object owners are the engines that initially posted their objects over
 :::
 
 ## Know who is the invocation origin
-```scala
 
 Using the static method `ExecutorEngine.currentEngine`, you can know who is the origin of the execution of a method.
 This is actually very powerfull for making APIs and client-server actions as you can choose to perform different actions depending on the client
 that is performing a _request_
 
+```scala
 class MyObject {
     /**
      * This method prints who originally invocated the method.
