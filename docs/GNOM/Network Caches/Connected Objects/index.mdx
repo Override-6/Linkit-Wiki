@@ -7,25 +7,38 @@ import {Diagram} from "/src/components/diagrams/Diagram";
 Connected Objects are a powerful evolution of Network Objects.<br></br>
 They comes with an enhanced and configurable RMI system.
 
-Here are the listed features of the connected objects system.
-See the <a href={pages.gnom.caches.connected_objects.cache}>next page</a> to know how to start with connected objects.
+See the <a href={pages.gnom.caches.connected_objects.cache}>next page</a> to know how to start with connected objects.<br></br>
 Make sure you understood the <a href={pages.gnom.naming.index}>Network Objects concept</a> in order not to get lost while reading this part.
+
+Some reminders:
+- An Engine is a connection in a Linkit Network. It can either be the server or a client connection.
+- The linkit's network operates in a <a href="https://learnlearn.uk/alevelcs/wp-content/uploads/sites/20/2020/02/star-topology.png">star topology</a>.
+In the diagrams below you'll see arrows directly pointing toward engines.
+This is to simplify the diagrams as the topology is not important here.
+
+## Summary
+
+Roughly, Connected objects are Network Objects that gets handled by an <orange>RMI system</orange>.
+This RMI system follows a <orange>contract</orange> that says what should happen when a connected object's method get invoked.
+The <orange>contract</orange> is the <orange>most important</orange> part of the <orange>Connected Object System</orange>.
+By configuring a contract, you specify how your connected objects will <orange>behave</orange> over the <orange>network</orange>.
+
+The Features list below will introduce to things you can do with connected objects.<br></br>
+Some features are not concerned by the contract.
 
 # Features
 
-## Simple Remote Method Invocations (RMIs)
+### Simple Remote Method Invocations (RMIs)
 
 ```scala
 class MyObject {
-    def foo(): Unit = {
-        print("foo called !")
-    }
+    def foo(): Unit = print("foo called !")
 }
 ```
 
 <Diagram light={require("/src/components/diagrams/Connected Object/Features/Simple RMI.svg")}
          dark={require("/src/components/diagrams/Connected Object/Features/Simple RMI.svg")}
-         style={{width: "75%", height: "75%", display:"block", margin:"auto"}}/>
+         style={{width: "75%", height: "75%", display: "block", margin: "auto"}}/>
 
 <details>
     <summary>Broadcast any method invocation on remote engines</summary>
@@ -35,7 +48,7 @@ class MyObject {
     </div>
 </details>
 
-## Flow control (agreements).
+### Flow control (agreements).
 Control who receives an invocation when a method get called, and who we choose to return a result.
 
 ```scala
@@ -52,7 +65,7 @@ class MyObject {
 
 <Diagram light={require("/src/components/diagrams/Connected Object/Features/RMI Agreements.svg")}
          dark={require("/src/components/diagrams/Connected Object/Features/RMI Agreements.svg")}
-         style={{width: "100%", height: "100%", display:"block", margin:"auto"}}/>
+         style={{width: "100%", height: "100%", display: "block", margin: "auto"}}/>
 
 <details>
     <summary>Invocation Agreements</summary>
@@ -63,25 +76,26 @@ class MyObject {
     </div>
 </details>
 
-### Also supports simple conditions
+#### Also supports simple conditions
 
 <Diagram light={require("/src/components/diagrams/Connected Object/Features/RMI Agreements - Conditions.drawio.svg")}
          dark={require("/src/components/diagrams/Connected Object/Features/RMI Agreements - Conditions.drawio.svg")}
-         style={{width: "100%", height: "100%", display:"block", margin:"auto"}}/>
+         style={{width: "100%", height: "100%", display: "block", margin: "auto"}}/>
 
 
 You can define some constraints on your agreements depending on the initial method execution context:
 
-<Diagram light={require("/src/components/diagrams/Connected Object/Features/RMI Agreements - Conditions (Contract).drawio.svg")}
-         dark={require("/src/components/diagrams/Connected Object/Features/RMI Agreements - Conditions (Contract).drawio.svg")}
-         style={{width: "50%", height: "50%", display:"block", margin:"auto"}}/>
+<Diagram
+    light={require("/src/components/diagrams/Connected Object/Features/RMI Agreements - Conditions (Contract).drawio.svg")}
+    dark={require("/src/components/diagrams/Connected Object/Features/RMI Agreements - Conditions (Contract).drawio.svg")}
+    style={{width: "50%", height: "50%", display: "block", margin: "auto"}}/>
 
 :::note
 On the diagram, the object is red for the engine that initially owns the object.<br></br>
 Connected Object owners are the engines that initially posted their objects over the network.
 :::
 
-## Know who is the invocation origin
+### Know who is the invocation origin
 
 Using the static method `ExecutorEngine.currentEngine`, you can know who is the origin of the execution of a method.
 This is actually very powerfull for making APIs and client-server actions as you can choose to perform different actions depending on the client
@@ -101,17 +115,17 @@ class MyObject {
 
 <Diagram light={require("/src/components/diagrams/Connected Object/Features/ExecutorEngine.svg")}
          dark={require("/src/components/diagrams/Connected Object/Features/ExecutorEngine.svg")}
-         style={{width: "75%", height: "75%", display:"block", margin:"auto"}}/>
+         style={{width: "75%", height: "75%", display: "block", margin: "auto"}}/>
 
-## Static accesses
+### Static accesses
 
-## Apply modifiers on parameters and return values
+### Apply modifiers on parameters and return values
 
-## Inner object connection
+### Inner object connection
 
-### Also Connect field values of connected objects
+#### Also Connect field values of connected objects
 
-### Also Connect param and return values on method invocations
+#### Also Connect param and return values on method invocations
 
-## Remote Implementation
+### Remote Implementation
 
