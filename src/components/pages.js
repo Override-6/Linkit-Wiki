@@ -19,7 +19,7 @@ export const pages = {
             connected_objects: {
                 bhv_lang: {},
                 index: "/Linkit/docs/GNOM/Network Caches/Connected Objects",
-                cache: "/Linkit/docs/GNOM/Network Caches/Connected Objects/The ConnectedObjectCache"
+                getting_started: "/Linkit/docs/GNOM/Network Caches/Connected Objects/Getting Started"
             }
         },
         persistence: {
