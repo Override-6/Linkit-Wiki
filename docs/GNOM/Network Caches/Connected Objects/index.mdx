@@ -24,32 +24,47 @@ The <orange>contract</orange> is the <orange>most important</orange> part of the
 By configuring a contract, you specify how your connected objects will <orange>behave</orange> over the <orange>network</orange>.
 
 The Features list below will introduce to things you can do with connected objects.<br></br>
-Some features are not concerned by the contract.
+Some features are not or not directly concerned by the contract.
 
 # Features
 
-### Simple Remote Method Invocations (RMIs)
+### Invocation Flow Control (agreements)
+When a method of a connected object gets called, the RMI system will follow it's bound <orange>agreement</orange>.
+The agreements specify which engines the invocation must spread onto,
+and which engine is <orange>appointed</orange> to return the final result of the call.
+
+#### Shared/Synchronized Objects
 
 ```scala
-class MyObject {
-    def foo(): Unit = print("foo called !")
+class MyWrapper[T](value: T = null) {
+    def set(t: T): T = {
+        val last = value
+        value = t
+        print(s"Changed value to '$value'")
+        last
+    }
+    def get: T = value
 }
 ```
+
+In this example, we create a fully synchronized mutable object by specifying in our contract that when the `set(T): T` method
+is invoked on an engine, the other engines that contains the same wrapper object also gets a call with the right parameters.
+
+For our getter, we just handle it as a regular method, as we are sure that our local value is the same on other engines,
+we don't want the invocation to get performed on our remote engines.
+
 
 <Diagram light={require("/src/components/diagrams/Connected Object/Features/Simple RMI.svg")}
          dark={require("/src/components/diagrams/Connected Object/Features/Simple RMI.svg")}
          style={{width: "75%", height: "75%", display: "block", margin: "auto"}}/>
+<br></br>
 
-<details>
-    <summary>Broadcast any method invocation on remote engines</summary>
-    <div>
-        All method invocations can be spread out on other engines in order to simulate a "cloud" object being accessed
-        from other engines and which internal state is completely synchronized.
-    </div>
-</details>
+Therefore, we can simulate a "cloud", a "shared" object being accessed
+from engines and which internal state is completely synchronized on each side.
 
-### Flow control (agreements).
-Control who receives an invocation when a method get called, and who we choose to return a result.
+#### Select specific engines and apply simple condition depending on the invocation context
+
+You can define some constraints on your agreements depending on the initial method execution context:
 
 ```scala
 class MyObject {
@@ -62,28 +77,11 @@ class MyObject {
     }
 }
 ```
-
-<Diagram light={require("/src/components/diagrams/Connected Object/Features/RMI Agreements.svg")}
-         dark={require("/src/components/diagrams/Connected Object/Features/RMI Agreements.svg")}
-         style={{width: "100%", height: "100%", display: "block", margin: "auto"}}/>
-
-<details>
-    <summary>Invocation Agreements</summary>
-    <div>
-        You can define a contract for methods and specify agreements that controls the invocation flow over the network.<br></br>
-        As the example shows, it's also possible to <orange>appoint</orange> an engine that'll have to return a result
-        when performing a call on multiple engines<br></br>
-    </div>
-</details>
-
-#### Also supports simple conditions
-
 <Diagram light={require("/src/components/diagrams/Connected Object/Features/RMI Agreements - Conditions.drawio.svg")}
          dark={require("/src/components/diagrams/Connected Object/Features/RMI Agreements - Conditions.drawio.svg")}
          style={{width: "100%", height: "100%", display: "block", margin: "auto"}}/>
 
-
-You can define some constraints on your agreements depending on the initial method execution context:
+<br></br>
 
 <Diagram
     light={require("/src/components/diagrams/Connected Object/Features/RMI Agreements - Conditions (Contract).drawio.svg")}
@@ -91,9 +89,31 @@ You can define some constraints on your agreements depending on the initial meth
     style={{width: "50%", height: "50%", display: "block", margin: "auto"}}/>
 
 :::note
-On the diagram, the object is red for the engine that initially owns the object.<br></br>
+On the diagram, the object is red when it's on the engine that initially owns the object.<br></br>
 Connected Object owners are the engines that initially posted their objects over the network.
 :::
+
+### Mirroring Objects and Remote Implementation control
+
+This is actually one of the most powerful possibility when using Connected Objects.
+
+A Mirroring Object is an object who's all method invocation will be performed on a remote engine that hosts the actual implementation of the object.
+Thus, Mirroring objects can either be a normal object, or an abstract object, such as interfaces or abstract classes.
+
+```scala
+trait DAO[A] {
+    def get(id: long): A
+    def getAll: List[A]
+    def save(a: A): Unit
+    def update(a: A): Unit
+    def delete(a: A): Unit
+}
+```
+
+<Diagram
+    light={require("/src/components/diagrams/Connected Object/Features/Mirroring Objects.svg")}
+    dark={require("/src/components/diagrams/Connected Object/Features/Mirroring Objects.svg")}
+    style={{width: "100%", height: "100%", display: "block", margin: "auto"}}/>
 
 ### Know who is the invocation origin
 
@@ -126,7 +146,3 @@ class MyObject {
 #### Also Connect field values of connected objects
 
 #### Also Connect param and return values on method invocations
-
-### Remote Implementation control
-
-This is actually one of the most powerful possibility of Connected Objects.
