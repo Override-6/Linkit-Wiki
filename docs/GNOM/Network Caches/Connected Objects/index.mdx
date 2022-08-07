@@ -97,8 +97,12 @@ Connected Object owners are the engines that initially posted their objects over
 
 This is actually one of the most powerful possibility when using Connected Objects.
 
-A Mirroring Object is an object who's all method invocation will be performed on a remote engine that hosts the actual implementation of the object.
-Thus, Mirroring objects can either be a normal object, or an abstract object, such as interfaces or abstract classes.
+A Mirroring Object is an object where all method invocation are performed on a remote engine that hosts the actual implementation of the object.
+Thus, Mirroring objects can either be a normal object, or an abstract object, such as interfaces, traits or abstract classes.
+
+Example :
+We can make an api to our server's database by defining a `DAO[T]` trait.
+The client only have the DAO trait on his side, and the server has the concrete class `PlayerDAO` that implements `DAO[Player]`
 
 ```scala
 trait DAO[A] {
@@ -110,16 +114,46 @@ trait DAO[A] {
 }
 ```
 
+Now <orange>on the client side</orange>, when we retrieve our DAO object (see <a href="Getting Started">Getting Started page</a> to understand the first line)
+we will be able to use a `DAO[Player]` object where its implementation is on the server-side.
+
+```scala showLineNumbers
+val playerDAO: DAO[Player] = cache.findObject(0).get //this line retrieves the playerDAO object from server's cache
+val player = Player(name="Rico", id=78)
+playerDAO.save(player)
+playerDA0.get(id=78) == player //true
+```
+
+Here's what happened over the network :
+
 <Diagram
     light={require("/src/components/diagrams/Connected Object/Features/Mirroring Objects.svg")}
     dark={require("/src/components/diagrams/Connected Object/Features/Mirroring Objects.svg")}
-    style={{width: "100%", height: "100%", display: "block", margin: "auto"}}/>
+    style={{width: "80%", height: "80%", display: "block", margin: "auto"}}/>
+
+<br></br>
+<details>
+    <summary>How does it work ?</summary>
+    <p>
+        The Linkit Framework <orange>generates</orange> an implementation class for any <orange>Connected Object</orange>.<br></br>
+        This allows the RMI System to handle the object's methods invocation by <orange>overriding</orange> all methods of the object's class.<br></br>
+        When a method is <orange>invoked</orange> on a connected object, its generated implementation will follow the <orange>associated</orange> contract.<br></br>
+    </p>
+    <p>
+        For <orange>Mirroring Objects</orange>, it's the same principle;<br></br>
+        When the DAO object got retrieved at first line, the Linkit Framework followed the contract on server-side that said
+        "Use stub class 'DAO[T]' when other engines access this object when it's a <orange>mirrored object</orange>" and so generated
+        a concrete implementation for `DAO[T]` on client-side.
+    </p>
+</details>
+
+
 
 ### Know who is the invocation origin
 
-Using the static method `ExecutorEngine.currentEngine`, you can know who is the origin of the execution of a method.
-This is actually very powerfull for making APIs and client-server actions as you can choose to perform different actions depending on the client
-that is performing a _request_
+Using the utility method `ExecutorEngine.currentEngine`, you can know who is the origin of the execution of a method.
+This is actually very powerful combined with the possibility of making <orange>Mirrored Objects</orange> as
+you can choose to perform different actions or checks depending on the client who accesses a method.
 
 ```scala
 class MyObject {
@@ -137,7 +171,26 @@ class MyObject {
          dark={require("/src/components/diagrams/Connected Object/Features/ExecutorEngine.svg")}
          style={{width: "75%", height: "75%", display: "block", margin: "auto"}}/>
 
-### Static accesses
+### Static accesses (Work In Progress)
+
+You can also access to statics of a class and thus define a contract for static methods.
+
+You can open your own `StaticAccessor` and apply a custom contract for static methods,
+or access to a specific engine's static accessor to call static methods on his side.
+
+Example :<br></br>
+- We want to know the time of the server we are connected on :
+
+```scala
+val serverDate = new Date(network.serverEngine.statics[System].currentTimeMillis())
+```
+
+To access a class (In this example, we access to the `System` class), the class must be allowed by the contract on remote-side.<br></br>
+Some methods can be hided by the contract as well :
+
+```scala
+network.serverEngine.statics[System].exit(0) //throws HiddenMethodInvocationException.
+```
 
 ### Apply modifiers on parameters and return values
 
