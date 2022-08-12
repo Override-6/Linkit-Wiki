@@ -112,7 +112,7 @@ const config = {
             prism: {
                 theme: lightCodeTheme,
                 darkTheme: darkCodeTheme,
-                additionalLanguages: ['bhv', 'java', 'scala'],
+                additionalLanguages: ['java', 'scala'],
             },
             colorMode: {
                 defaultMode: 'light',
