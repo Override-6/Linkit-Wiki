@@ -72,6 +72,10 @@ const config = {
                         to: 'pathname:///scaladoc'
                     },
                     {
+                        label: 'Debugger',
+                        to: 'debugger'
+                    },
+                    {
                         label: 'Roadmap',
                         to: 'roadmap'
                     },
