@@ -1,14 +1,72 @@
+import "/src/css/roadmap.css"
+
 # Roadmap coming soon
 
-The Linkit's roadmap is under construction
+## Framework
+<ul>
+    <li>🔲 Fully exclude Engine dependency from user-side</li>
+    <li>🔲 Create a SPI in order to extend some parts of the framework</li>
+    <li>🛠️ Connected Objects
+        <ul>
+            <li>🛠 Contracts</li>
+            <ul>
+                <li>❓ Discuss if we keep modifiers</li>
+                <li>🛠️ Better invalid contracts error description</li>
+                <li>✅ Apply contract on classes, methods, fields</li>
+                <li>✅ Ability to specify that an object should become a chipped or mirror object</li>
+                <li>✅ Stub classes for mirroring objects</li>
+            </ul>
+            <li>🛠️ DSL Language</li>
+            <ul>
+                <li>✅ Class, methods, fields description support</li>
+                <li>✅ Mirror, chipped objects specification support</li>
+                <li>✅ Stub classes / interfaces</li>
+                <ul>✅ Simple agreement description
+                    <li>🔲 Add custom engine tags for agreement description (instead of defaults "owner", "cache_owner"
+                        etc)</li>
+                </ul>
+            </ul>
+        </ul>
+    </li>
+    <li>🔲 Connection
+        <ul>
+            <li>🔲 Fully handle engine disconnection without crash</li>
+            <li>🔲 Fully handle engine reconnection without crash</li>
+        </ul>
+    </li>
+</ul>
 
-
-# Framework
-#--
+## Website
+<ul>🔲 Contribute page
+    <ul>
+        <li>🔲 Add rules and a how-to-contribute paragraph</li>
+        <li>🔲 Add a mini survey for the contributors to help them choose what they could do based on what they like to
+            do
+        </li>
+        <li>🔲 For each feature that needs contribution, create a page that explains what to do.</li>
+    </ul>
+</ul>
 
 ## Debugger
 
-* [ ] A
-* [ ] Interface
-    * [ ] C
-    * [ ] D
+<ul>
+    <li>🔲 Traffic panel</li>
+    <ul>
+        <li>🔲 Packet Tab</li>
+        <ul>
+            <li>🔲 Ordered list of all packets being sent/received by the engine</li>
+            <li>🔲 Ability to apply filters on the list to show specific packets</li>
+            <li>🔲 Insight for each packets on what's happened during serialization/deserialization</li>
+            <li>🔲 Insight for each packets on what's happened during injection</li>
+        </ul>
+        <li>🔲 Channel Tab</li>
+        <ul>
+            <li>🔲 List of opened channels with their nodes information</li>
+            <li>🔲 List of packet involved into channels (sent and received)</li>
+            <li>🔲 SIPUs state insights</li>
+            <ul>
+                <li></li>
+            </ul>
+        </ul>
+    </ul>
+</ul>
