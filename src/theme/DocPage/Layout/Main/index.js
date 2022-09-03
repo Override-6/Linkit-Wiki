@@ -59,7 +59,6 @@ export default function MainWrapper(props) {
 
     return (<>
         <div id={"content"}>
-            <Header/>
             <Main {...props}/>
             <Footer/>
         </div>
