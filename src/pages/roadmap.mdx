@@ -1,17 +1,21 @@
 import "/src/css/roadmap.css"
 
+# Roadmap
+
+Here are the ambitions and planned features of the Linkit Project and all its side projects
+
 ## Framework
 <ul>
     <li>🔲 Fully exclude Engine dependency from user-side</li>
     <li>🔲 Create a SPI in order to extend some parts of the framework</li>
     <li>❓ Actions shortener (be able to make complex actions that would require a bunch of objects access to be completed)</li>
+    <li>🔲 Inter-Engine Garbage Collector (GC for unused Network Objects)</li>
     <li>🛠️ Connected Objects
         <ul>
-            <li>🔲 Inter-Engine Garbage Collector (GC for unused ConnectedObjects)</li>
             <li>🛠 Contracts</li>
             <ul>
                 <li>❓ Discuss if we keep modifiers</li>
-                <li>🛠️ Better invalid contracts error description</li>
+                <li>🛠️ Better invalid contracts error messages</li>
                 <li>✅ Apply contract on classes, methods, fields</li>
                 <li>✅ Ability to specify that an object should become a chipped or mirror object</li>
                 <li>✅ Stub classes for mirroring objects</li>
@@ -52,6 +56,23 @@ import "/src/css/roadmap.css"
 
 ## Debugger
 
+
+### Builtin
+<ul>
+    <li>🛠️ Watchdog</li>
+    <ul>
+        <li>✅ Simple deadlock detection on local side (can be uncorrect)</li>
+        <li>🔲 Further deadlock detection by analyzing the other engines states and figure out if the threads are deadlocked or just simply waiting an external event (user input, method execution etc)</li>
+        <li>🔲 On deadlock, Find what threads are locked on the remote side and then print out the remote threads names in charge of the response.</li>
+    </ul>
+    <li>🛠️ Debugger</li>
+    <ul>
+        <li></li>
+    </ul>
+</ul>
+
+### Graphical app
+The app would be based on the builtin outputs.
 <ul>
     <li>🔲 Traffic Panel</li>
     <ul>
@@ -66,10 +87,6 @@ import "/src/css/roadmap.css"
         <ul>
             <li>🔲 List of opened channels with their nodes information</li>
             <li>🔲 List of packet involved into channels (sent and received)</li>
-            <li>🔲 SIPUs state insights</li>
-            <ul>
-                <li></li>
-            </ul>
         </ul>
     </ul>
     <li>🔲 Workers Panel</li>
