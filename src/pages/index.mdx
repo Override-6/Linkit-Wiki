@@ -96,10 +96,10 @@ Pour cette partie-là, afin de simplifier le raisonnement, nous partons du princ
 Notre projet a subi de sacrés changements, <br></br>
 `Core` a un nouveau packet `multiplayer`, ce packet contient le trait `Connection`,
 utilisé par `GameSession` pour recevoir / envoyer des requêtes. <br></br>
-Lorsqu'un événement est engendré, c'est soit depuis une requête, soit depuis l'application.
-`GameSession` va alors se charger d'envoyer une requête lorsqu'un évènement est engendré depuis l'application, et vice versa
-`ServerConnection` dans `Client` implémente `Connection` et permet d'envoyer des requêtes vers le serveur ou d'en réceptionner une
-`Server` est apparu, il contient `GameSessionsHandler` qui répertorie toutes les sessions de jeux qu'il gère,
+Lorsqu'un événement est engendré, c'est soit depuis une requête, soit depuis l'application. <br></br>
+`GameSession` va alors se charger d'envoyer une requête lorsqu'un évènement est engendré depuis l'application, et vice versa. <br></br>
+`ServerConnection` dans `Client` implémente `Connection` et permet d'envoyer des requêtes vers le serveur ou d'en réceptionner une. <br></br>
+`Server` est apparu, il contient `GameSessionsHandler` qui répertorie toutes les sessions de jeux qu'il gère, <br></br>
 et `ClientConnection` implémente `Connection`, et permet de recevoir et envoyer une requête vers le client représenté.
 
 
