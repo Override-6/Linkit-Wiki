@@ -4,15 +4,107 @@ import "/src/css/custom.css"
 # The Linkit Framework
 
 <p>
-    <orange>Linkit</orange> is a <pink>Scala</pink> <orange>framework</orange> that handles the <orange>network</orange> exchanges of an application.
+    <orange>Linkit</orange>
+    est un framework de gestion d'un réseau, qui a la particularité que les échanges effectués entre les machines
+    modifient directement les objets concernés plus-tot que par une manipulation via des requêtes
 </p>
 
 <p>
-    The Framework's network communication is performed in a high level, allowing the user to work in
-    an <orange>object-oriented communication</orange>.
+    Ce haut niveau d'abstraction masque complètement la gestion pure des communications et des requêtes/réponses,
+    ce qui permet à l'utilisateur un effort minimal pour développer son application, puisque l'entièreté de la réflexion
+    concernant le réseau est concentrée dans un fichier où l'utilisateur décrit le comportement attendu sur les réseau
+    des objets enregistrés par le framework
 </p>
+
 <p>
-    The Framework's <a href="/Linkit/docs/GNOM/Persistence/x">persistence system</a> allows the user to send almost any non-serializable objects
+    Cette page d'introduction servira à présenter le potentiel recherché par cette technologie, en comparant les
+    méthodes traditionnelles de communication et la méthode "orientée objet" proposée par Linkit.
 </p>
-Shared objects can be converted into "Connected Objects" in which method calls can be triggered according to a defined contract amongst actual and distant versions of the connected object.
-This special handling is available for instances of any public / non-final classes.
+
+## Presentation by example
+<p>
+    Nous avons un jeux vidéo dans lequel des joueurs peuvent évoluer sur une carte, ils peuvent ramasser des armes et
+    tirer sur d'autres joueurs pour faire baisser leurs barres de vie jusqu'à les tuer.
+</p>
+
+<p>
+    Nous cherchons à présent un moyen de développer la partie multijoueur.
+    Nous voulons des sessions de jeux, dans lesquels les joueurs peuvent s'y connecter et s'affronter.
+</p>
+
+Voici la structure actuelle de l'application :
+```shell title="initial project structure"
+.
+├── Core
+│   └── src
+│       └── scala
+│           └── Player.scala
+│           └── Map.scala
+│           └── Weapon.scala
+└── Client
+    └── src
+        └── scala
+            ├── graphics
+│           │   └── ... <- PlayerView / MapView / WeaponView etc...
+            └── Main.scala
+```
+
+### Modèle Requête/Réponse
+Dans un premier temps, nous allons utiliser le modèle habituel, c'est-à-dire que nous allons effectuer des requêtes vers le serveur
+afin de l'informer lorsqu'un joueur bouge, tir, saute ou essaye de ramasser une arme.
+Inversement, le Serveur informera les clients lorsqu'un joueur aura effectué une action valide.
+
+Développons !
+
+```shell title="request/response model project structure"
+.
+├── Core
+│   └── src
+│       └── scala
+│           ├── multiplayer
+│           │   ├── Connection.scala
+│           │   ├── GameSession.scala
+│           │   ├── event
+│           │   │   └── ... <- OnXEvent, OnYEvent ...
+│           │   └── handler
+│           │       ├── OnPlayerJumpEventHandler.scala
+│           │       ├── OnPlayerLootWeaponEventHandler.scala
+│           │       ├── OnPlayerMoveEventHandler.scala
+│           │       ├── OnPlayerHitEventHandler.scala
+│           │       └── OnPlayerShootEventHandler.scala
+│           ├── Player.scala
+│           ├── Map.scala
+│           └── Weapon.scala
+├── Client
+│   └── src
+│       └── scala
+│           ├── multiplayer
+│           │   └── ServerConnection.scala
+│           ├── graphics
+│           │   └── ... <- PlayerView / MapView / WeaponView etc...
+│           └── Main.scala
+└── Server
+    └── src
+        └── scala
+            ├── Main.scala
+            └── multiplayer
+                ├── GameSessionsHander.scala
+                └── ClientConnection.scala
+```
+
+Pour cette partie-là, afin de simplifier le raisonnement, nous partons du principe que le serveur ne s'occupe pas de vérifier si une requête est legit ou non.
+
+Notre projet a subi de sacrés changements, <br></br>
+`Core` a un nouveau packet `multiplayer`, ce packet contient le trait `Connection`,
+utilisé par `GameSession` pour recevoir / envoyer des requêtes. <br></br>
+Lorsqu'un événement est engendré, c'est soit depuis une requête, soit depuis l'application.
+`GameSession` va alors se charger d'envoyer une requête lorsqu'un évènement est engendré depuis l'application, et vice versa
+`ServerConnection` dans `Client` implémente `Connection` et permet d'envoyer des requêtes vers le serveur ou d'en réceptionner une
+`Server` est apparu, il contient `GameSessionsHandler` qui répertorie toutes les sessions de jeux qu'il gère,
+et `ClientConnection` implémente `Connection`, et permet de recevoir et envoyer une requête vers le client représenté.
+
+
+#### Problem
+<p>
+
+</p>
